@@ -5,10 +5,12 @@ import fs from 'fs';
 class Transcode {
     inputPath: string;
     outputPath: string;
+    setValue: any;
     options: any | undefined;
-    constructor(inputPath : string, outputPath : string, options : any){
+    constructor(inputPath : string, outputPath : string, setValue: any, options : any){
         this.inputPath = inputPath;
         this.outputPath = outputPath;
+        this.setValue = setValue;
         this.options = options || {};
     }
 
@@ -25,12 +27,14 @@ class Transcode {
           if (showLogs){
             console.log(data.toString());
           }
+          this.setValue(data.toString())
         });
 
         ls.stderr.on('data', (data: any) =>  {
           if (showLogs){
             console.log(data.toString());
           }
+          this.setValue(data.toString())
         });
 
         ls.on('exit', (code: any) =>  {
